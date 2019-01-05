@@ -6,6 +6,7 @@ from random import random
 from PIL import Image as im 
 from numpy import asarray, array
 from matplotlib import pyplot as plot
+from colorsys import rgb_to_hsv, hsv_to_rgb
 
 	# The LOG will be here:
 arq = "__pycache__\\Pos-Impressionismo.log"

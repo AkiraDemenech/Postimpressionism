@@ -1,8 +1,14 @@
 """This module implements the peculiar (or those that try to be it) methods of Image Processing"""
 
-print("Importing...", end="")	# Here we start
-from postimpressionism.Getimpressionism import *	# and then everything begin
-print("The end", end='')		# to finish briefly
+
+try:
+	print("Importing...", end="")	# Here we start
+	from postimpressionism.Getimpressionism import *	# and then everything begin
+except ModuleNotFoundError:
+	from Getimpressionism import *	# solving some problems sometimes
+	print("Finished", end='!')
+else:
+	print("The end", end='')		# to finish briefly
 
 def channel (img, ch, gray = False):
 	"""Isolating the color channels of an image"""
@@ -82,13 +88,38 @@ def dada (img):
 
 	return img
 
-def pink (img, black = True, white = False):	#The Fauvist Filter is here
-	"""Transforming to pink, purple, blue and red the pixels as a Fauvist [filter]"""
-	img = imopen(img)
+def purple (img, qtd=1, res=[]):
+	"""HSV transforming to magenta, blue and red the pixels"""
+	if qtd>1:
+		i = 1
+		res.append (img)
+		while i < qtd:
+			img = purple (img, res=res)
+			print (str(i) + (('st', 'nd', 'rd')[i-1], 'th')[i>=3] + " image")
+			i += 1
 
+	img = imopen(img)
+	res.append(img)
+	for x in range(img.shape[0]):
+		for y in range(img.shape[1]):
+			h, s, v = convert(*img[x,y])
+			h = (2 + h)/3
+			img[x, y] = convert (h, s, v, True)
+	return img
+
+def pink (img, black = True, white = False, qtd=1, res=[]):	#The Fauvist Filter is here
+	"""RGB transforming to pink, purple, blue and red the pixels as a Fauvist [filter]"""
+	if qtd>1:
+		img = pink (img, black, white, qtd-1, res)
+	else:
+		res.append(img)
+	
+	img = imopen(img)
+	res.append (img)
 	l = img.shape[0]
 	c = img.shape[1]
 
+	print ('\t\t>>>' + str(qtd))
 	if(not white):
 		print('Róseo seletivo')
 		if(black):
@@ -143,7 +174,8 @@ def pink (img, black = True, white = False):	#The Fauvist Filter is here
 						w = 2 - z/2	#	quanto mais Azul, menos será aumentado	[2, 1.5, 1]
 					p[z] **= w	# proporção por exponenciação
 
-				img[x,y] = p
+				img[x,y] = p	
+
 	return img
 
 def strip (img, *gargs):

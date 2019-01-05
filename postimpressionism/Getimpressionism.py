@@ -1,5 +1,9 @@
 """This module implements the main basic methods to Image Processing."""
-from postimpressionism.Setimpressionism import *
+try:
+	from postimpressionism.Setimpressionism import *
+except ModuleNotFoundError:
+	from Setimpressionism import *
+	#	If I am testing from the directory . . .
 
 img_path = "C:\\"
 def _path_ (p = None):
@@ -39,6 +43,16 @@ def imopen (image, noalpha = True):
 	else:
 		image = image.copy()
 	return image
+
+def convert (a, b, c, is_hsv=False):
+	"""Convert RGB and HSV"""
+	if is_hsv:
+		a = list(hsv_to_rgb(a,b,c))
+		for c in range(3):
+			a[c] = int(255*a[c])
+		return a
+	
+	return list (rgb_to_hsv (a/255, b/255, c/255))
 
 def methodTime (met, tsec=None):
 	"""The Great Method Chronometer"""

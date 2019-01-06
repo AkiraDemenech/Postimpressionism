@@ -1,6 +1,4 @@
 """This module implements the peculiar (or those that try to be it) methods of Image Processing"""
-
-
 try:
 	print("Importing...", end="")	# Here we start
 	from postimpressionism.Getimpressionism import *	# and then everything begin
@@ -10,23 +8,20 @@ except ModuleNotFoundError:
 else:
 	print("The end", end='')		# to finish briefly
 
-def channel (img, ch, gray = False):
-	"""Isolating the color channels of an image"""
+def channels (img, *ch):
+	"""Permuting the color channels of an image"""
+	if len(ch)==1:
+		ch = ch*3
 	img = imopen(img)
-	ch = int(ch)
-
 	for x in range(img.shape[0]):
 		for y in range(img.shape[1]):
-			for c in range(3):
-				if(c!=ch):
-					if(gray):
-						img[x, y][c] = img[x, y][ch]
-					else:
-						img[x, y][c] = 0
-	
+			#b = []
+			#for c in ch:
+			#	b.append (img[x,y][c])
+			img[x, y] = img[x,y][ch[0]], img[x,y][ch[1]], img[x,y][ch[2]] #b
 	return img
 
-def gradient (img, grad = True, redshift = False, lightblue = False, xgreen = False, grayfirst = False, greengray = True):
+def gradient (img, grad = True, redshift = False, lightblue = False, xgreen = False, grayfirst = False, greengray = True, hsvbased = False):
 	"""Sorting all the image's pixels"""
 	img = imopen(img)
 	px = []
@@ -35,6 +30,8 @@ def gradient (img, grad = True, redshift = False, lightblue = False, xgreen = Fa
 		for y in range(img.shape[1]):
 			
 			r, g, b = img[x, y]
+			if(hsvbased):
+				r, g, b = convert (r,g,b)
 
 			p = [r, g, b]
 
@@ -45,7 +42,7 @@ def gradient (img, grad = True, redshift = False, lightblue = False, xgreen = Fa
 				p.reverse()
 
 			if(grayfirst):
-				gray = r + int(g) + b
+				gray = r + g + b
 				div = 3
 				if(greengray):
 					div = 4
@@ -73,6 +70,9 @@ def gradient (img, grad = True, redshift = False, lightblue = False, xgreen = Fa
 			r, b, g = px[c]
 			px[c] = [r, g, b]
 
+		if(hsvbased):
+			px[c] = convert(*px[c],True)
+
 	return px
 
 def dada (img):
@@ -94,8 +94,9 @@ def purple (img, qtd=1, res=[]):
 		i = 1
 		res.append (img)
 		while i < qtd:
+			n = time ()
 			img = purple (img, res=res)
-			print (str(i) + (('st', 'nd', 'rd')[i-1], 'th')[i>=3] + " image")
+			print (str(i) + ('st','nd','rd', 'th')[[i-1, 3][i>3]] + " image == " + str (time() - n) + ' s')
 			i += 1
 
 	img = imopen(img)

@@ -111,12 +111,13 @@ def purple (img, qtd=1, res=[]):
 def pink (img, black = True, white = False, qtd=1, res=[]):	#The Fauvist Filter is here
 	"""RGB transforming to pink, purple, blue and red the pixels as a Fauvist [filter]"""
 	if qtd>1:
-		img = pink (img, black, white, qtd-1, res)
+		global pink
+		img = pink(img, black, white, qtd-1, res)
 	else:
-		res.append(img)
+		res.append (img)
 	
 	img = imopen(img)
-	res.append (img)
+	res.append(img)
 	l = img.shape[0]
 	c = img.shape[1]
 

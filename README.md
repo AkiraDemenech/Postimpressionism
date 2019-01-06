@@ -1,7 +1,6 @@
 # Postimpressionism
-The Fauvist Filter [pink](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L85),
-Dada pixel organizator [dada](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L72),
-Strip antidiagonal      [strip](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L149)
+The Fauvist Filter [pink](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L111) and the HSV [purple](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L91) manipulator,
+[dada](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L78) pixel organizator, [strip](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L183) antidiagonal, [channel](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L11) permutation
 and other artististic Python image processing functions
 at [Postimpressionism.py](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py)
 

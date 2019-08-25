@@ -21,6 +21,18 @@ def channels (img, *ch):
 			img[x, y] = img[x,y][ch[0]], img[x,y][ch[1]], img[x,y][ch[2]] #b
 	return img
 
+def sort (img, blueshift=False):
+	"""Sorting the color channels of an image"""
+	img = imopen(img)
+	for x in range(img.shape[0]):
+		for y in range(img.shape[1]):
+			a = list(img[x, y])
+			a.sort()
+			if not blueshift:
+				a.reverse()
+			img[x, y] = a
+	return img
+
 def gradient (img, grad = True, redshift = False, lightblue = False, xgreen = False, grayfirst = False, greengray = True, hsvbased = False):
 	"""Sorting all the image's pixels"""
 	img = imopen(img)
@@ -185,7 +197,7 @@ def strip (img, *gargs):
 	if(img.__class__ == str):
 		img = imopen(img)
 	
-	pixels = report(gradient, img, *gargs)
+	pixels = gradient (img, *gargs)
 	
 	down = True
 	into = False
@@ -222,7 +234,7 @@ def strip (img, *gargs):
 #	"""Em breve...."""
 #	img = imopen(img)
 #	
-#	pixels = report(gradient, img, *gargs)
+#	pixels = gradient (img, *gargs)
 
 
 	# The End 

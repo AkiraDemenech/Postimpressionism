@@ -21,16 +21,47 @@ def channels (img, *ch):
 			img[x, y] = img[x,y][ch[0]], img[x,y][ch[1]], img[x,y][ch[2]] #b
 	return img
 
-def sort (img, blueshift=False):
+def sort (img, redshift=True):
 	"""Sorting the color channels of an image"""
 	img = imopen(img)
 	for x in range(img.shape[0]):
 		for y in range(img.shape[1]):
 			a = list(img[x, y])
 			a.sort()
-			if not blueshift:
+			if redshift:
 				a.reverse()
 			img[x, y] = a
+	return img
+
+def neg (img, once=True):
+	"""Negative of the image, possibly sorting the bigger channels or inverting again (once=None)"""
+	img = imopen(img)
+	for x in range(img.shape[0]):
+		for y in range(img.shape[1]):
+			a = list(img[x, y])
+			c = len(a)
+			b = c*[0]
+			while c > 0:
+				c -= 1
+				d = len(a)
+				while d > 0:
+					d -= 1
+					b[c] += a[d] < a[c]
+			c = len(a)
+			while c > 0:
+				c -= 1
+				a[c] = 255 - a[c]
+			if once:
+				img[x, y] = a
+				continue
+			c = len(a)
+			a.sort()
+			if once == None:
+				a.reverse()
+			while c > 0:
+				c -= 1
+				b[c] = a[b[c]]
+			img[x, y] = b
 	return img
 
 def gradient (img, grad = True, redshift = False, lightblue = False, xgreen = False, grayfirst = False, greengray = True, hsvbased = False):

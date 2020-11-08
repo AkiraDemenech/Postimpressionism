@@ -34,19 +34,11 @@ def sort (img, redshift=True):
 	return img
 
 def neg (img, once=True):
-	"""Negative of the image, possibly sorting the bigger channels or inverting again (once=None)"""
+	"""Negative of the image, possibly sorting the bigger channels (once=False)"""
 	img = imopen(img)
 	for x in range(img.shape[0]):
 		for y in range(img.shape[1]):
 			a = list(img[x, y])
-			c = len(a)
-			b = c*[0]
-			while c > 0:
-				c -= 1
-				d = len(a)
-				while d > 0:
-					d -= 1
-					b[c] += a[d] < a[c]
 			c = len(a)
 			while c > 0:
 				c -= 1
@@ -55,9 +47,15 @@ def neg (img, once=True):
 				img[x, y] = a
 				continue
 			c = len(a)
+			b = c*[0]
+			while c > 0:
+				c -= 1
+				d = len(a)
+				while d > 0:
+					d -= 1
+					b[c] += a[d] > a[c]
+			c = len(a)
 			a.sort()
-			if once == None:
-				a.reverse()
 			while c > 0:
 				c -= 1
 				b[c] = a[b[c]]
@@ -225,31 +223,22 @@ def pink (img, black = True, white = False, qtd=1, res=[]):	#The Fauvist Filter 
 
 def strip (img, *gargs):
 	"""Antidiagonal pixel sorting"""
-	if(img.__class__ == str):
-		img = imopen(img)
+	img = imopen(img)
 	
-	pixels = gradient (img, *gargs)
+	
 	
 	down = True
 	into = False
 	
 	x = y = 0
 
-	for p in pixels:
+	for p in gradient (img, *gargs):
 
 		img[x, y] = p
 
-		if(not into):
 
-			if((x==0 or x==img.shape[0]-1) and y<img.shape[1]-1):
-				y += 1
-			else:
-				x += 1
 
-			down = (x==0 or y==img.shape[1]-1)
-			into = True
-
-		else:
+		if into:
 			if(down):
 				x += 1
 				y -= 1
@@ -259,14 +248,52 @@ def strip (img, *gargs):
 			
 			into = not ((x==0 or y==0 or x==img.shape[0]-1 or y==img.shape[1]-1))
 
+		else:
+
+			if((x==0 or x==img.shape[0]-1) and y<img.shape[1]-1):
+				y += 1
+			else:
+				x += 1
+
+			down = (x==0 or y==img.shape[1]-1)
+			into = True
+
 	return img
 
-#def vortex (img, *gargs):
-#	"""Em breve...."""
-#	img = imopen(img)
-#	
-#	pixels = gradient (img, *gargs)
+def spiral (img, *gargs):
+	"""Rectangle vortex pixel sorting"""
+	img = imopen(img)
+	
+	dy = x = y = v = 0
+	dx = 1
 
+	for p in gradient (img, *gargs):
+
+		img[x, y] = p
+
+		if x == img.shape[0]-dx-v:
+			dx = 0
+			dy = 1
+		elif y == img.shape[1]-dy-v:
+			dx = -1
+			dy = 0
+		elif x == v and dx<0:
+			dx = 0
+			dy = -1
+		elif y == v and dy<0:
+			dx = 1
+			dy = 0
+			v += 1
+
+		x += dx
+		y += dy
+	return img
+
+
+
+
+
+	
 
 	# The End 
 print('?\n')

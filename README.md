@@ -1,6 +1,6 @@
 # Postimpressionism
-The Fauvist Filter [pink](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L111) and the HSV [purple](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L91) manipulator,
-[dada](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L78) pixel organizator, [strip](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L183) antidiagonal, [channel](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L11) permutation
+The Fauvist Filter [pink](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L152) and the HSV [purple](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L132) manipulator,
+[dada](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#119) pixel organizator, [strip](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L224) antidiagonal and [spiral](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L263) sorting, [channel](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py#L11) permutation
 and other artististic Python image processing functions
 at [Postimpressionism.py](https://github.com/AkiraDemenech/Postimpressionism/blob/master/postimpressionism/Postimpressionism.py)
 

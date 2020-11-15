@@ -260,30 +260,34 @@ def strip (img, *gargs):
 
 	return img
 
-def spiral (img, *gargs):
+def spiral (img, clockwise=True, *gargs):
 	"""Rectangle vortex pixel sorting"""
 	img = imopen(img)
 	
-	dy = x = y = v = 0
-	dx = 1
+	v = x = y = 0
+	dx = clockwise
+	dy = not dx
+	
 
 	for p in gradient (img, *gargs):
 
 		img[x, y] = p
+		
 
 		if x == img.shape[0]-dx-v:
 			dx = 0
-			dy = 1
+			dy = (2*clockwise) - 1
 		elif y == img.shape[1]-dy-v:
-			dx = -1
+			dx = 1 - (2*clockwise) 
 			dy = 0
 		elif x == v and dx<0:
 			dx = 0
-			dy = -1
+			dy = 1 - (2*clockwise)
+			v += clockwise
 		elif y == v and dy<0:
-			dx = 1
+			dx = (2*clockwise) - 1
 			dy = 0
-			v += 1
+			v += not clockwise
 
 		x += dx
 		y += dy

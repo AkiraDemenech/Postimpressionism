@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='postimpressionism',
-    version='0.1.6',
+    version='0.1.7',
     url='https://github.com/AkiraDemenech/Postimpressionism',
     license='MIT License',
     author='Akira Demenech',

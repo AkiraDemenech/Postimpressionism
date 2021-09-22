@@ -1,4 +1,7 @@
 """This module implements the main basic methods to Image Processing."""
+
+
+
 try:
 	from postimpressionism.Setimpressionism import *
 except ModuleNotFoundError:
@@ -34,9 +37,8 @@ def imopen (image, noalpha = True):
 	if(image.__class__ == str):
 		image = im.open(image)
 
-	if(image.__class__ != array):
-		image = asarray(image)
-		image.setflags(write=1)
+	image = array(image)
+	image.setflags(write=1)
 
 	if(noalpha and image.shape[2]>3):
 		return image[:,:,0:3]
@@ -53,6 +55,44 @@ def convert (a, b, c, is_hsv=False):
 		return a
 	
 	return list (rgb_to_hsv (a/255, b/255, c/255))
+
+def gray (px, *weights, cast = int):		
+	"""Converts the pixel to grayscale using the given weights (or 1 by default) casting to int"""
+	y = w = cast(0)	
+	for x in range(len(px)):		
+		z = cast(px[x])
+		try:			
+			y += z * weights[x]	
+			w += weights[x]
+		except Exception:
+			y += z
+			w += 1			
+	return y/w		
+
+def grey (p, *w, c=uint8):	
+	"""Converts the pixel to grayscale using the given weights (or 1 by default) keeping uint8"""
+	return gray(p,*w,c)
+
+def mean (p, include_zeros = True):
+	"""Sums all the channels and divide by their quantity (by default, counts zeros as well)"""
+	d = s = 0
+	for c in p:
+		s += c
+		d += include_zeros or c != 0
+	return s//d	
+
+def product (p):	
+	"""Multiply all the channels (mod 256)"""
+	b = 1
+	for c in p:
+		b *= c
+	return b%256	
+
+mult = lambda x, y: x*y
+div = lambda x, y: x//y
+add = lambda x, y: x+y
+sub = lambda x, y: x-y
+	
 
 	# We finally finished the basic things.
 print("\tAll basic\tmethods imported.")

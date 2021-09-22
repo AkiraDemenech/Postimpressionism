@@ -293,8 +293,18 @@ def spiral (img, clockwise=True, *gargs):
 		y += dy
 	return img
 
+def tv_noise (img, operation = add, inv_op = sub, id = 0):
+	"""An strange manipulation"""
+	img = imopen(img)
 
 
+	for x in range(img.shape[0]):
+		for y in range(img.shape[1]):
+			t = id 
+			for c in img[x][y]: 
+				t = operation(c,t)
+			img[x][y] = [inv_op(t,c)%256 for c in img[x][y]]	
+	return img		
 
 
 	
